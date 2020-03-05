@@ -1,7 +1,5 @@
 
 
-
-
 const steak = [
   'season steak generously with salt, pepper and garlic powder',
   'place in ziplock bag',
@@ -33,13 +31,98 @@ const mashPotatoes = [
   'enjoy'
 ] 
 
+// Iteration 1 With function hell
+// addFood(steak[0], '#steak', function(){
+//   addFood(steak[1], '#steak', function(){
+//     addFood(steak[2], '#steak', function(){
+//       addFood(steak[3], '#steak', function(){
+//         addFood(steak[4], '#steak', function(){
+//           addFood(steak[5], '#steak', function(){
+
+//           })
+//         })
+//       })
+//     })
+//   })
+// })
+
+// function makefood(step, id){
+//   for (let i=0; i<step.length; i++){
+//     console.log(i)
+//     addFood(steak[i], '#steak', function(){
+//     })
+//   } console.log(id)
+// }
+
+//         function makefood(step, id){
+//           console.log(id)
+//           for (let i=0; i<step.length; i++){
+//             console.log( `${i+1}. ${step[i]}`)
+//             addFood(step[i], id)
+//           }
+//           console.log(`${id} is DONE `)
+//           console.log('____________________');
+//         }
+       
+// makefood(steak, '#steak')
+// makefood(brusselSprouts, '#brusselSprouts')
+//             // makefood(mashPotatoes, '#mashPotatoes')
+
+
+// // Iteration 2 DONE:
+// // Using a promise, make food creates stake and then mashed potatoes
+
+// let foodpromise = new Promise((resolve, rej) => {
+//     //resolve('Steak is DONE')
+// });
+
+// foodpromise.then(function(value){
+//   makefood(mashPotatoes, '#mashPotatoes');
+// });
+
+
+// addFood(steak[0], '#steak', function(){
+//   addFood(steak[1], '#steak', function(){
   
-function makeFood(steps, id){
-  console.log('start here', steps, id)
+//   })
+// })
+// foodpromise.then(function(value){
+//   console.log(value)
+//   makefood(mashPotatoes, '#mashPotatoes');
+// })
+
+
+// Async function and stuff
+
+async function prepareMeal(steps, id){
+  for(let step of steps){
+    await addFood(step, id)
+  }
+  document.querySelector('#table').innerHTML += `<img src=images/${id.replace('#','')}.jpg />`
+
 }
 
+// prepareMeal(steak, '#steak')
+// prepareMeal(brusselSprouts, '#brusselSprouts')
+// prepareMeal(mashPotatoes, '#mashPotatoes')
 
 
-makeFood(steak, '#steak')
+Promise.all([
+  prepareMeal(steak, '#steak'),
+  prepareMeal(brusselSprouts, '#brusselSprouts'),
+  prepareMeal(mashPotatoes, '#mashPotatoes').then(res =>{
+    document.body.innerHTML += `<button onclick="new Audio('dinnerIsServed.mp3').play()">Dinner is Served </button>`
+  })
+])
+
+
+
+
+
+
+
+
+
+
 
 
